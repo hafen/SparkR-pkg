@@ -107,3 +107,16 @@ test_that("textFile() and saveAsTextFile() word count works as expected", {
   unlink(fileName1)
   unlink(fileName2)
 })
+
+test_that("textObjectFile() works as expected", {
+  fileName <- tempfile(pattern="spark-test", fileext=".tmp")
+
+  pairs <- list(list("a", iris), list("b", 1:10), list("c", cars))
+  rdd <- parallelize(sc, pairs)
+  saveAsTextFile(rdd, fileName)
+
+  output <- collect(textObjectFile(sc, fileName))
+
+  expect_equal(output, pairs)
+})
+

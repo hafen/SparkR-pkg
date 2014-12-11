@@ -1068,7 +1068,7 @@ setMethod("saveAsTextFile",
           signature(rdd = "RDD", path = "character"),
           function(rdd, path) {
             func <- function(x) {
-              toString(x)
+              objToString(x)
             }
             stringRdd <- lapply(rdd, func)
             .jcall(getJRDD(stringRdd, dataSerialization = FALSE), "V", "saveAsTextFile", path)

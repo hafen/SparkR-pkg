@@ -29,6 +29,31 @@ textFile <- function(sc, path, minSplits = NULL) {
   RDD(jrdd, FALSE)
 }
 
+#' Create an RDD from a text file containing serialized R objects as strings.
+#'
+#' This function reads a text file from HDFS, a local file system (available on all
+#' nodes), or any Hadoop-supported file system URI, and creates an
+#' RDD of R objects from by deserializing strings of R objects.
+#'
+#' @param sc SparkContext to use
+#' @param path Path of file to read
+#' @param minSplits Minimum number of splits to be created. If NULL, the default
+#'  value is chosen based on available parallelism.
+#' @return RDD where each item is of type \code{character}
+#' @export
+#' @examples
+#'\dontrun{
+#'  sc <- sparkR.init()
+#'  lines <- textObjectFile(sc, "myfile.txt")
+#'}
+textObjectFile <- function(sc, path, minSplits = NULL) {
+  res <- textFile(sc, path, minSplits)
+  func <- function(x) {
+    stringToObj(x)
+  }
+  lapply(res, func)
+}
+
 #' Create an RDD from a homogeneous list or vector.
 #'
 #' This function creates an RDD from a local homogeneous list in R. The elements

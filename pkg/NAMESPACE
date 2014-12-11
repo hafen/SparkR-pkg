@@ -52,6 +52,9 @@ exportMethods(
 # S3 methods exported
 export(
        "textFile",
+       "textObjectFile",
+       "objToString",
+       "stringToObj",
        "parallelize",
        "hashCode",
        "includePackage",
@@ -60,3 +63,4 @@ export(
        "setCheckpointDir"
       )
 export("sparkR.init")
+import(base64enc)

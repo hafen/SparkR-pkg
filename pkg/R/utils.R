@@ -221,3 +221,39 @@ reserialize <- function(rdd) {
     return(ser.rdd)
   }
 }
+
+
+#' Convert R Object to String
+#'
+#' Convert an R object to a string 
+#' @param x an R object
+#' @export
+#' @example
+#' a <- objToString(iris)
+#' substr(a, 1, 100)
+#' stringToObj(a)
+objToString <- function(x) {
+   base64encode(serialize(x, NULL, ascii = TRUE))
+}
+
+#' Convert String to R Object
+#'
+#' Convert a String to an R object
+#' @param x a string
+#' @export
+#' @example
+#' a <- objToString(iris)
+#' substr(a, 1, 100)
+#' stringToObj(a)
+stringToObj <- function(x) {
+   unserialize(base64decode(x))
+}
+
+# # another way to do it except it results in newlines
+# # and is not as safe as base64
+# objToString <- function(x) {
+#    rawToChar(serialize(x, NULL, ascii = TRUE))
+# }
+# stringToObj <- function(x) {
+#    unserialize(charToRaw(x))
+# }

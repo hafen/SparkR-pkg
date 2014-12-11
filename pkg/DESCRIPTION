@@ -9,6 +9,8 @@ Depends:
     R (>= 3.0),
     methods,
     rJava
+Imports:
+    base64enc
 Suggests:
     testthat
 Description: R frontend for Spark
